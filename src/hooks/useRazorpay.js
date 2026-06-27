@@ -30,16 +30,22 @@ export default function useRazorpay() {
     loadRazorpayScript(); // pre-load on mount for faster checkout
   }, []);
 
-  const pay = useCallback(async ({
-    amount,          // in RUPEES  e.g. 699
-    productName,     // e.g. "Raw Himalayan Honey 500g"
-    customerName,
-    customerEmail,
-    customerPhone,
-    receipt,
-    onSuccess,       // called with { payment_id, order_id } after verification
-    onCancel,        // called if user dismisses the modal
-  }) => {
+ const pay = useCallback(async ({
+  amount,
+  productName,
+  customerName,
+  customerEmail,
+  customerPhone,
+
+  customer,
+  shipping,
+  items,
+  total,
+
+  receipt,
+  onSuccess,
+  onCancel,
+}) => {
     setError(null);
     setLoading(true);
 
@@ -48,23 +54,28 @@ export default function useRazorpay() {
       if (!scriptLoaded) throw new Error("Could not load Razorpay checkout. Check your internet connection.");
 
       // Step 1: Create order on backend
-      const orderRes = await fetch(`${API_BASE}/api/create-order`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount,
-          currency: "INR",
-          receipt: receipt || `rcpt_${Date.now()}`,
-          notes: { product: productName },
-        }),
-      });
+     // Step 1: Create order on backend
+const orderRes = await fetch(`${API_BASE}/api/create-order`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    amount,
+    receipt,
+  }),
+});
 
-      if (!orderRes.ok) {
-        const err = await orderRes.json();
-        throw new Error(err.error || "Failed to create payment order");
-      }
+if (!orderRes.ok) {
+  const err = await orderRes.json();
+  throw new Error(err.error || "Failed to create payment order");
+}
 
-      const { order_id, amount: orderAmount, currency } = await orderRes.json();
+const {
+  order_id,
+  amount: orderAmount,
+  currency,
+} = await orderRes.json();
 
       // Step 2: Open Razorpay modal
       await new Promise((resolve, reject) => {
@@ -96,10 +107,15 @@ export default function useRazorpay() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_signature: response.razorpay_signature,
-                }),
+  razorpay_order_id: response.razorpay_order_id,
+  razorpay_payment_id: response.razorpay_payment_id,
+  razorpay_signature: response.razorpay_signature,
+
+  customer,
+  shipping,
+  items,
+  total,
+}),
               });
 
               const result = await verifyRes.json();

@@ -37,24 +37,58 @@ export default function Checkout() {
     const receipt = `gharrat_${Date.now()}`;
     const productSummary = items.map(i => `${i.name} ${i.variantLabel} x${i.qty}`).join(", ");
 
-    await pay({
-      amount: total,          // in rupees
-      productName: productSummary,
-      customerName: form.name,
-      customerEmail: form.email,
-      customerPhone: `91${form.phone.replace(/\s/g, "")}`,
-      receipt,
-      onSuccess: ({ payment_id, order_id }) => {
-        clearCart();
-        navigate("/order-confirmed", {
-          state: { payment_id, order_id, name: form.name, email: form.email }
-        });
-      },
-      onCancel: () => {
-        // User dismissed — do nothing, stay on checkout
+
+await pay({
+  amount: total,
+  productName: productSummary,
+
+  customerName: form.name,
+  customerEmail: form.email,
+  customerPhone: `91${form.phone.replace(/\s/g, "")}`,
+
+  receipt,
+
+  customer: {
+    name: form.name,
+    email: form.email,
+    phone: form.phone,
+  },
+
+  shipping: {
+    address: form.address,
+    city: form.city,
+    state: "Himachal Pradesh",
+    pincode: form.pincode,
+  },
+
+  items: items.map((item) => ({
+    name: item.name,
+    variant: item.variantLabel,
+    quantity: item.qty,
+    price: item.price,
+  })),
+
+  total,
+
+  onSuccess: ({ payment_id, order_id }) => {
+    clearCart();
+
+    navigate("/order-confirmed", {
+      state: {
+        payment_id,
+        order_id,
+        name: form.name,
+        email: form.email,
       },
     });
-  }
+  },
+
+  onCancel: () => {
+    // User closed Razorpay
+  },
+});
+
+}
 
   if (items.length === 0) {
     return (
