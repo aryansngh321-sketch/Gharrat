@@ -69,7 +69,7 @@ export const products = [
       },
     ],
     variants: [
-      { id: "250g", label: "250g", price: 399, comparePrice: 449, stock: 42 },
+      { id: "250g", label: "250g", price: 1, comparePrice: 1, stock: 42 },
       { id: "500g", label: "500g", price: 699, comparePrice: 799, stock: 35 },
       { id: "1kg", label: "1kg", price: 1249, comparePrice: 1399, stock: 18 },
     ],
