@@ -25,10 +25,10 @@
 
 /* ─── HEADER ───────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .site-header { padding: 16px 0; }
-  .site-header--scrolled { padding: 12px 0; }
+  .site-header { padding: 18px 0; }
+  .site-header--scrolled { padding: 14px 0; }
   .site-header__inner { grid-template-columns: auto 1fr auto; gap: 0; }
-  .site-header__logo-img { height: 32px; }
+  .site-header__logo-img { height: 38px; }
   .site-header__burger { display: flex; }
   .site-header__nav { display: none; }
 
@@ -44,20 +44,22 @@
 
 /* Mobile menu full-screen */
 @media (max-width: 768px) {
-  .mobile-menu__inner { padding: 90px 24px 40px; }
-  .mobile-menu__links { gap: 18px; }
+  .mobile-menu__inner { padding: 90px 28px 40px; }
+  .mobile-menu__links { gap: 24px; }
   .mobile-menu__links > li > a {
     font-size: 30px;
-    display: block;
-    padding: 6px 0;
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
     line-height: 1.2;
+    min-height: 48px;
   }
   .mobile-menu__sublink a {
     font-size: 16px;
-    padding: 8px 0;
-    min-height: 44px;
+    padding: 10px 0;
+    min-height: 48px;
   }
-  .mobile-menu__whatsapp { font-size: 15px; margin-top: 20px; }
+  .mobile-menu__whatsapp { font-size: 15px; margin-top: 24px; }
   .mobile-menu__instagram { font-size: 15px; }
 }
 
