@@ -25,10 +25,10 @@
 
 /* ─── HEADER ───────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .site-header { padding: 18px 0; }
-  .site-header--scrolled { padding: 14px 0; }
+  .site-header { padding: 22px 0; }
+  .site-header--scrolled { padding: 16px 0; }
   .site-header__inner { grid-template-columns: auto 1fr auto; gap: 0; }
-  .site-header__logo-img { height: 38px; }
+  .site-header__logo-img { height: 50px; }
   .site-header__burger { display: flex; }
   .site-header__nav { display: none; }
 

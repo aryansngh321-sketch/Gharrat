@@ -9,7 +9,7 @@
   z-index: 100;
   background: linear-gradient(180deg, rgba(31,42,36,0.35) 0%, rgba(31,42,36,0) 100%);
   transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
-  padding: 28px 0;
+  padding: 34px 0;
 }
 
 .site-header--on-light {
@@ -28,7 +28,7 @@
   backdrop-filter: blur(20px) saturate(1.4);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
   box-shadow: 0 0.5px 0 0 rgba(0,0,0,0.04), 0 1px 0 var(--line);
-  padding: 16px 0;
+  padding: 18px 0;
 }
 
 /* Default nav colors → light (for dark hero backgrounds) */
@@ -1268,19 +1268,20 @@
   justify-content: center;
 }
 .site-header__logo-img {
-  height: 48px;
+  height: 65px;
   width: auto;
   object-fit: contain;
   transition: filter 0.3s ease, transform 0.2s ease;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.15));
 }
 /* On dark hero: invert dark-green logo to white */
 .site-header:not(.site-header--scrolled):not(.site-header--on-light) .site-header__logo-img {
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1) drop-shadow(0 1px 4px rgba(0,0,0,0.35));
 }
 /* On light bg or scrolled: show natural dark green */
 .site-header--on-light .site-header__logo-img,
 .site-header--scrolled .site-header__logo-img {
-  filter: none;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.12));
 }
 
 /* Mobile menu logo */
